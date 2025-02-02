@@ -1,52 +1,25 @@
-/* Resetando margens e paddings padrão */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  margin: 0;
-}
-
-.container {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 600px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
 /* Estilizando o formulário de adicionar atividade */
-.activity-form {
+.activityForm {
   margin-bottom: 20px;
 }
 
-.activity-form label {
+.activityForm label {
   display: block;
   margin-top: 10px;
+  color: #333;
 }
 
-.activity-form select,
-.activity-form input {
+.activityForm select,
+.activityForm input {
   width: 100%;
   padding: 8px;
   margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
 }
 
-.activity-form button {
+.activityForm button {
   margin-top: 10px;
   padding: 10px;
   width: 100%;
@@ -55,9 +28,10 @@ h1 {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 1.1rem;
 }
 
-.activity-form button:hover {
+.activityForm button:hover {
   background-color: #45a049;
 }
 
@@ -69,6 +43,7 @@ h1 {
   margin-bottom: 20px;
   border-radius: 4px;
   border: 1px solid #ccc;
+  font-size: 1rem;
 }
 
 /* Área das atividades registradas */
@@ -84,6 +59,9 @@ h1 {
   margin-bottom: 10px;
   border-radius: 4px;
   border: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .activity-list li span {
@@ -100,18 +78,20 @@ h1 {
   margin-top: 5px;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 0.9rem;
 }
 
 .activity-list li button:hover {
   background-color: #d32f2f;
 }
 
+/* Estilizando o painel de estatísticas */
 #statistics {
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin: 20px;
+  margin-top: 20px;
   font-family: "Arial", sans-serif;
 }
 
@@ -153,19 +133,4 @@ h1 {
   margin-top: 20px;
   color: #333;
   text-decoration: underline;
-}
-
-@media (max-width: 768px) {
-  #statistics {
-    padding: 15px;
-  }
-
-  #statistics h3 {
-    font-size: 20px;
-  }
-
-  #statistics p,
-  #statistics ul li {
-    font-size: 14px;
-  }
 }

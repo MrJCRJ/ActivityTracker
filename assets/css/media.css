@@ -1,0 +1,34 @@
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+    padding: 15px;
+  }
+
+  #statistics {
+    padding: 15px;
+  }
+
+  #statistics h3 {
+    font-size: 20px;
+  }
+
+  #statistics p,
+  #statistics ul li {
+    font-size: 14px;
+  }
+
+  .activityForm select,
+  .activityForm input,
+  .filter-input {
+    font-size: 1rem;
+  }
+
+  .activityForm button {
+    font-size: 1rem;
+  }
+
+  .activity-list li button {
+    font-size: 0.85rem;
+  }
+}

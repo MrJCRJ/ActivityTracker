@@ -4,14 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Activity Tracker</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./assets/css/reset.css" />
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/components.css" />
+    <link rel="stylesheet" href="./assets/css/media.css" />
   </head>
   <body>
     <div class="container">
       <h1>Activity Tracker</h1>
 
       <!-- Formulário para adicionar a atividade -->
-      <div class="activity-form">
+      <div class="activityForm">
         <label for="activitySelect">Nome da Atividade</label>
         <select id="activitySelect">
           <option value="Projetos">Projetos</option>
@@ -36,12 +39,14 @@
       </div>
 
       <!-- Filtro de atividades -->
-      <input
-        type="text"
-        id="filterActivity"
-        placeholder="Filtrar atividades"
-        class="filter-input"
-      />
+      <div>
+        <label for="filterActivity">Filtrar Atividades:</label>
+        <input
+          type="text"
+          id="filterActivity"
+          placeholder="Digite para filtrar"
+        />
+      </div>
 
       <!-- Área das atividades registradas -->
       <div>
@@ -53,6 +58,8 @@
     <!-- Estatísticas -->
     <div id="statistics"></div>
 
-    <script src="app.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/activity.js"></script>
+    <script src="js/statistics.js"></script>
   </body>
 </html>
