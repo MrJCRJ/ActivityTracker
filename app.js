@@ -65,8 +65,16 @@ function deleteActivity(id, listItem) {
 
 function filterActivities() {
   const filterText = document.getElementById('filterActivity').value.toLowerCase();
-  const activityItems = document.querySelectorAll('.activity-item');
+  const activities = JSON.parse(localStorage.getItem('activities')) || [];
 
+  // Filtra as atividades com base no texto do filtro
+  const filteredActivities = activities.filter(activity => {
+    return activity.name.toLowerCase().includes(filterText) ||
+      activity.date.includes(filterText);
+  });
+
+  // Atualiza o DOM com as atividades filtradas
+  const activityItems = document.querySelectorAll('.activity-item');
   activityItems.forEach(item => {
     const text = item.textContent.toLowerCase();
     if (text.includes(filterText)) {
@@ -75,11 +83,12 @@ function filterActivities() {
       item.style.display = 'none';
     }
   });
+
+  // Atualiza as estatísticas para as atividades filtradas
+  renderStatistics(filteredActivities);
 }
 
-function renderStatistics() {
-  const activities = JSON.parse(localStorage.getItem('activities')) || [];
-
+function renderStatistics(activities) {
   const totalActivities = activities.length;
   const totalHours = activities.reduce((sum, activity) => {
     const start = new Date(`${activity.date}T${activity.start}`);
@@ -88,10 +97,51 @@ function renderStatistics() {
     return sum + duration;
   }, 0);
 
+  const averageDuration = totalActivities > 0 ? totalHours / totalActivities : 0;
+
+  let maxDurationActivity = activities[0];
+  let minDurationActivity = activities[0];
+
+  activities.forEach(activity => {
+    const start = new Date(`${activity.date}T${activity.start}`);
+    const end = new Date(`${activity.date}T${activity.end}`);
+    const duration = (end - start) / 1000 / 60 / 60; // em horas
+
+    if (duration > (new Date(`${maxDurationActivity.date}T${maxDurationActivity.start}`) - new Date(`${maxDurationActivity.date}T${maxDurationActivity.end}`)) / 1000 / 60 / 60) {
+      maxDurationActivity = activity;
+    }
+
+    if (duration < (new Date(`${minDurationActivity.date}T${minDurationActivity.start}`) - new Date(`${minDurationActivity.date}T${minDurationActivity.end}`)) / 1000 / 60 / 60) {
+      minDurationActivity = activity;
+    }
+  });
+
+  const activityStats = activities.reduce((acc, activity) => {
+    const start = new Date(`${activity.date}T${activity.start}`);
+    const end = new Date(`${activity.date}T${activity.end}`);
+    const duration = (end - start) / 1000 / 60 / 60; // em horas
+
+    if (!acc[activity.name]) {
+      acc[activity.name] = 0;
+    }
+    acc[activity.name] += duration;
+
+    return acc;
+  }, {});
+
   const statsContainer = document.getElementById('statistics');
   statsContainer.innerHTML = `
     <h3>Estatísticas</h3>
     <p><strong>Total de Atividades:</strong> ${totalActivities}</p>
     <p><strong>Total de Horas Realizadas:</strong> ${totalHours.toFixed(2)} horas</p>
+    <p><strong>Média de Duração das Atividades:</strong> ${averageDuration.toFixed(2)} horas</p>
+    <p><strong>Atividade com Maior Duração:</strong> ${maxDurationActivity.name} - ${maxDurationActivity.date} | Início: ${maxDurationActivity.start} | Fim: ${maxDurationActivity.end}</p>
+    <p><strong>Atividade com Menor Duração:</strong> ${minDurationActivity.name} - ${minDurationActivity.date} | Início: ${minDurationActivity.start} | Fim: ${minDurationActivity.end}</p>
+    <h4>Estatísticas por Atividade:</h4>
+    <ul>
+      ${Object.entries(activityStats).map(([activityName, totalTime]) => `
+        <li><strong>${activityName}:</strong> ${totalTime.toFixed(2)} horas</li>
+      `).join('')}
+    </ul>
   `;
 }
