@@ -22,19 +22,17 @@ function saveActivity() {
   localStorage.setItem('activities', JSON.stringify(activities));
 
   addActivityToDOM(newActivity);  // Adiciona a atividade ao DOM
-
-  renderStatistics(activities);  // Atualiza as estatísticas após adicionar a atividade
+  renderStatistics(activities);   // Atualiza as estatísticas após adicionar a atividade
 }
 
 function loadActivities() {
   const activities = JSON.parse(localStorage.getItem('activities')) || [];
-  activities.sort((a, b) => new Date(b.date) - new Date(a.date)); // Ordena por data (do mais recente)
+  activities.sort((a, b) => new Date(b.date) - new Date(a.date)); // Ordena por data
   activities.forEach(addActivityToDOM);
 }
 
 function addActivityToDOM(activity) {
   const activityLog = document.getElementById('activityLog');
-
   const listItem = document.createElement('li');
   listItem.classList.add('activity-item');
   listItem.innerHTML = `
@@ -54,14 +52,12 @@ function deleteActivity(id, listItem) {
   localStorage.setItem('activities', JSON.stringify(activities));
 
   listItem.remove();
-  renderStatistics(activities); // Atualizar as estatísticas após excluir atividade
+  renderStatistics(activities); // Atualiza as estatísticas após excluir atividade
 }
 
 function filterActivities() {
   const filterText = document.getElementById('filterActivity').value.toLowerCase();
   const activities = JSON.parse(localStorage.getItem('activities')) || [];
-
-  // Filtra as atividades com base no texto do filtro
   const filteredActivities = activities.filter(activity => {
     return activity.name.toLowerCase().includes(filterText) ||
       activity.date.includes(filterText);
@@ -78,6 +74,5 @@ function filterActivities() {
     }
   });
 
-  // Atualiza as estatísticas para as atividades filtradas
-  renderStatistics(filteredActivities);
+  renderStatistics(filteredActivities); // Atualiza as estatísticas para as atividades filtradas
 }
