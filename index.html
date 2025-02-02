@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activity Tracker</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Activity Tracker</h1>
+
+      <!-- Escolher a atividade -->
+      <label for="activitySelect">Atividade:</label>
+      <select id="activitySelect">
+        <option value="Treino">Treino</option>
+        <option value="Estudo">Estudo</option>
+        <option value="Trabalho">Trabalho</option>
+        <option value="Lazer">Lazer</option>
+      </select>
+
+      <!-- Escolher a data -->
+      <label for="activityDate">Data:</label>
+      <input type="date" id="activityDate" />
+
+      <!-- Escolher horário de início e fim -->
+      <label for="startTime">Início:</label>
+      <input type="time" id="startTime" />
+
+      <label for="endTime">Fim:</label>
+      <input type="time" id="endTime" />
+
+      <button id="saveActivity">Registrar Atividade</button>
+
+      <h2>Atividades Registradas</h2>
+      <ul id="activityLog"></ul>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
