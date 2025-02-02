@@ -1,4 +1,7 @@
-document.addEventListener('DOMContentLoaded', loadActivities);
+document.addEventListener('DOMContentLoaded', () => {
+  loadActivities();
+  renderStatistics(); // Carrega as estatísticas ao carregar a página
+});
 document.getElementById('saveActivity').addEventListener('click', saveActivity);
 document.getElementById('filterActivity').addEventListener('input', filterActivities);
 
