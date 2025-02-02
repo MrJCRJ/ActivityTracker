@@ -10,15 +10,8 @@
     <div class="container">
       <h1>Activity Tracker</h1>
 
-      <!-- Filtro de busca -->
-      <input type="text" id="filterActivity" placeholder="Filtrar atividades" />
-
-      <div>
-        <h3>Atividades Registradas</h3>
-        <ul id="activityLog"></ul>
-      </div>
-
-      <div>
+      <!-- Formulário para adicionar a atividade -->
+      <div class="activity-form">
         <label for="activitySelect">Nome da Atividade</label>
         <select id="activitySelect">
           <option value="Leitura">Leitura</option>
@@ -38,7 +31,24 @@
 
         <button id="saveActivity">Salvar Atividade</button>
       </div>
+
+      <!-- Filtro de atividades -->
+      <input
+        type="text"
+        id="filterActivity"
+        placeholder="Filtrar atividades"
+        class="filter-input"
+      />
+
+      <!-- Área das atividades registradas -->
+      <div>
+        <h3>Atividades Registradas</h3>
+        <ul id="activityLog" class="activity-list"></ul>
+      </div>
     </div>
+
+    <!-- Estatísticas -->
+    <div id="statistics"></div>
 
     <script src="app.js"></script>
   </body>

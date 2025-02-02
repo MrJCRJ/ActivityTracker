@@ -1,6 +1,13 @@
+/* Resetando margens e paddings padrão */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f9;
+  background-color: #f4f4f4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,54 +16,92 @@ body {
 }
 
 .container {
-  text-align: center;
+  background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-button {
-  padding: 10px 20px;
-  margin: 10px;
-  font-size: 16px;
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Estilizando o formulário de adicionar atividade */
+.activity-form {
+  margin-bottom: 20px;
+}
+
+.activity-form label {
+  display: block;
+  margin-top: 10px;
+}
+
+.activity-form select,
+.activity-form input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+.activity-form button {
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  background-color: #4caf50;
+  color: #fff;
   border: none;
-  border-radius: 5px;
-  background-color: #5cb85c;
-  color: white;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #4cae4c;
+.activity-form button:hover {
+  background-color: #45a049;
 }
 
-#activityLog {
-  margin-top: 20px;
-  font-size: 18px;
-  color: #333;
-}
-
-.activity-item {
-  margin: 10px 0;
-  padding: 10px;
-  background: #f4f4f4;
-  border: 1px solid #ccc;
+/* Estilizando o filtro */
+.filter-input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  margin-bottom: 20px;
   border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  border: 1px solid #ccc;
 }
 
-.delete-button {
-  background: red;
+/* Área das atividades registradas */
+.activity-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.activity-list li {
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.activity-list li span {
+  display: block;
+  font-size: 14px;
+  color: #666;
+}
+
+.activity-list li button {
+  background-color: #f44336;
   color: white;
   border: none;
   padding: 5px 10px;
-  cursor: pointer;
+  margin-top: 5px;
   border-radius: 4px;
+  cursor: pointer;
 }
 
-.delete-button:hover {
-  background: darkred;
+.activity-list li button:hover {
+  background-color: #d32f2f;
 }

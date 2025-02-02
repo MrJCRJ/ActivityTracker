@@ -26,6 +26,7 @@ function saveActivity() {
   localStorage.setItem('activities', JSON.stringify(activities));
 
   addActivityToDOM(newActivity);
+  renderStatistics(); // Atualizar as estatísticas após adicionar atividade
 }
 
 function loadActivities() {
@@ -56,6 +57,7 @@ function deleteActivity(id, listItem) {
   localStorage.setItem('activities', JSON.stringify(activities));
 
   listItem.remove();
+  renderStatistics(); // Atualizar as estatísticas após excluir atividade
 }
 
 function filterActivities() {
@@ -70,4 +72,23 @@ function filterActivities() {
       item.style.display = 'none';
     }
   });
+}
+
+function renderStatistics() {
+  const activities = JSON.parse(localStorage.getItem('activities')) || [];
+
+  const totalActivities = activities.length;
+  const totalHours = activities.reduce((sum, activity) => {
+    const start = new Date(`${activity.date}T${activity.start}`);
+    const end = new Date(`${activity.date}T${activity.end}`);
+    const duration = (end - start) / 1000 / 60 / 60; // em horas
+    return sum + duration;
+  }, 0);
+
+  const statsContainer = document.getElementById('statistics');
+  statsContainer.innerHTML = `
+    <h3>Estatísticas</h3>
+    <p><strong>Total de Atividades:</strong> ${totalActivities}</p>
+    <p><strong>Total de Horas Realizadas:</strong> ${totalHours.toFixed(2)} horas</p>
+  `;
 }
