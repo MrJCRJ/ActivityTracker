@@ -105,3 +105,67 @@ h1 {
 .activity-list li button:hover {
   background-color: #d32f2f;
 }
+
+#statistics {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  font-family: "Arial", sans-serif;
+}
+
+#statistics h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+#statistics p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+#statistics p strong {
+  font-weight: bold;
+  color: #333;
+}
+
+#statistics ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#statistics ul li {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+#statistics ul li strong {
+  color: #333;
+}
+
+#statistics h4 {
+  font-size: 18px;
+  margin-top: 20px;
+  color: #333;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  #statistics {
+    padding: 15px;
+  }
+
+  #statistics h3 {
+    font-size: 20px;
+  }
+
+  #statistics p,
+  #statistics ul li {
+    font-size: 14px;
+  }
+}
