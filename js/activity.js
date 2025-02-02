@@ -73,6 +73,4 @@ function filterActivities() {
       item.style.display = 'none';
     }
   });
-
-  renderStatistics(filteredActivities); // Atualiza as estatísticas para as atividades filtradas
 }

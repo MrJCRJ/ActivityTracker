@@ -1,3 +1,9 @@
+// Função para obter atividades do localStorage
+function getActivitiesFromStorage() {
+  const storedActivities = localStorage.getItem('activities');
+  return storedActivities ? JSON.parse(storedActivities) : [];
+}
+
 // Função para calcular a duração de uma atividade em horas
 function calculateDuration(activity) {
   const start = new Date(`${activity.date}T${activity.start}`);
@@ -12,42 +18,9 @@ function formatDuration(durationInHours) {
   return `${hours}h ${minutes}m`;
 }
 
-// Função para calcular as estatísticas gerais
-function calculateGeneralStatistics(activities) {
-  const totalActivities = activities.length;
-  const totalHours = activities.reduce((sum, activity) => sum + calculateDuration(activity), 0);
-  const averageDuration = totalActivities > 0 ? totalHours / totalActivities : 0;
-
-  // Encontrar atividade com maior e menor duração
-  let maxDurationActivity = activities[0];
-  let minDurationActivity = activities[0];
-
-  activities.forEach(activity => {
-    const duration = calculateDuration(activity);
-    const maxDuration = calculateDuration(maxDurationActivity);
-    const minDuration = calculateDuration(minDurationActivity);
-
-    if (duration > maxDuration) {
-      maxDurationActivity = activity;
-    }
-
-    if (duration < minDuration) {
-      minDurationActivity = activity;
-    }
-  });
-
-  return {
-    totalActivities,
-    totalHours,
-    averageDuration,
-    maxDurationActivity,
-    minDurationActivity,
-  };
-}
-
-// Função para calcular as estatísticas de cada atividade
-function calculateActivityStats(activities) {
-  return activities.reduce((acc, activity) => {
+// Função para calcular estatísticas por atividade
+function calculateActivityStats(filteredActivities) {
+  return filteredActivities.reduce((acc, activity) => {
     const duration = calculateDuration(activity);
     if (!acc[activity.name]) {
       acc[activity.name] = 0;
@@ -57,23 +30,47 @@ function calculateActivityStats(activities) {
   }, {});
 }
 
-// Função para renderizar as estatísticas na tela
-function renderStatistics(activities) {
-  // Calcular as estatísticas gerais
-  const { totalActivities, totalHours, averageDuration, maxDurationActivity, minDurationActivity } = calculateGeneralStatistics(activities);
+// Função para filtrar atividades por data
+function filterActivitiesByDate() {
+  const startDateInput = document.getElementById('start-date').value;
+  const endDateInput = document.getElementById('end-date').value;
 
-  // Calcular as estatísticas por atividade
-  const activityStats = calculateActivityStats(activities);
+  if (!startDateInput || !endDateInput) {
+    renderStatistics(getActivitiesFromStorage());
+    return;
+  }
 
-  // Atualizar o conteúdo da página com as estatísticas
+  // Converter as datas para objetos Date
+  const startDate = new Date(startDateInput);
+  const endDate = new Date(endDateInput);
+
+  // Ajustar endDate para incluir todo o dia (23:59:59)
+  endDate.setHours(23, 59, 59, 999);
+
+  // Buscar atividades do localStorage
+  const activities = getActivitiesFromStorage();
+
+  // Filtrar as atividades dentro do intervalo
+  const filteredActivities = activities.filter(activity => {
+    const activityDate = new Date(activity.date);
+    return activityDate >= startDate && activityDate <= endDate;
+  });
+
+  // Renderizar estatísticas das atividades filtradas
+  renderStatistics(filteredActivities);
+}
+
+// Função para renderizar estatísticas por atividade
+function renderStatistics(filteredActivities) {
+  const activityStats = calculateActivityStats(filteredActivities);
   const statsContainer = document.getElementById('statistics');
+
+  if (Object.keys(activityStats).length === 0) {
+    statsContainer.innerHTML = "<p>Nenhuma atividade encontrada nesse período.</p>";
+    return;
+  }
+
   statsContainer.innerHTML = `
-    <h3>Estatísticas</h3>
-    <p><strong>Total de Atividades:</strong> ${totalActivities}</p>
-    <p><strong>Total de Horas Realizadas:</strong> ${formatDuration(totalHours)}</p>
-    <p><strong>Média de Duração das Atividades:</strong> ${formatDuration(averageDuration)}</p>
-    <p><strong>Atividade com Maior Duração:</strong> ${maxDurationActivity.name} - ${maxDurationActivity.date} | Início: ${maxDurationActivity.start} | Fim: ${maxDurationActivity.end} | Duração: ${formatDuration(calculateDuration(maxDurationActivity))}</p>
-    <p><strong>Atividade com Menor Duração:</strong> ${minDurationActivity.name} - ${minDurationActivity.date} | Início: ${minDurationActivity.start} | Fim: ${minDurationActivity.end} | Duração: ${formatDuration(calculateDuration(minDurationActivity))}</p>
     <h4>Estatísticas por Atividade:</h4>
     <ul>
       ${Object.entries(activityStats).map(([activityName, totalTime]) => `
@@ -82,3 +79,8 @@ function renderStatistics(activities) {
     </ul>
   `;
 }
+
+// Carregar e renderizar atividades do localStorage ao iniciar
+window.onload = () => {
+  renderStatistics(getActivitiesFromStorage());
+};

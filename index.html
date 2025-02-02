@@ -56,10 +56,22 @@
     </div>
 
     <!-- Estatísticas -->
-    <div id="statistics"></div>
+    <div>
+      <label for="start-date">Data de Início:</label>
+      <input type="date" id="start-date" />
+
+      <label for="end-date">Data de Fim:</label>
+      <input type="date" id="end-date" />
+
+      <button onclick="filterActivitiesByDate()">Filtrar</button>
+    </div>
+
+    <div id="statistics">
+      <!-- Estatísticas serão renderizadas aqui -->
+    </div>
 
     <script src="js/activity.js"></script>
-    <script src="js/app.js"></script>
     <script src="js/statistics.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>
