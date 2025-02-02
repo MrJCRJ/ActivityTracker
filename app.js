@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   loadActivities();
-  renderStatistics(); // Carrega as estatísticas ao carregar a página
+  const activities = JSON.parse(localStorage.getItem('activities')) || [];
+  renderStatistics(activities); // Atualizar as estatísticas ao carregar a página
 });
 document.getElementById('saveActivity').addEventListener('click', saveActivity);
 document.getElementById('filterActivity').addEventListener('input', filterActivities);
@@ -28,8 +29,9 @@ function saveActivity() {
   activities.push(newActivity);
   localStorage.setItem('activities', JSON.stringify(activities));
 
-  addActivityToDOM(newActivity);
-  renderStatistics(); // Atualizar as estatísticas após adicionar atividade
+  addActivityToDOM(newActivity);  // Adiciona a atividade ao DOM
+
+  renderStatistics(activities);  // Atualiza as estatísticas após adicionar a atividade
 }
 
 function loadActivities() {
@@ -60,7 +62,7 @@ function deleteActivity(id, listItem) {
   localStorage.setItem('activities', JSON.stringify(activities));
 
   listItem.remove();
-  renderStatistics(); // Atualizar as estatísticas após excluir atividade
+  renderStatistics(activities); // Atualizar as estatísticas após excluir atividade
 }
 
 function filterActivities() {
