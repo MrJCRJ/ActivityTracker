@@ -131,18 +131,24 @@ function renderStatistics(activities) {
     return acc;
   }, {});
 
+  const formatDuration = (durationInHours) => {
+    const hours = Math.floor(durationInHours);
+    const minutes = Math.round((durationInHours - hours) * 60);
+    return `${hours}h ${minutes}m`;
+  };
+
   const statsContainer = document.getElementById('statistics');
   statsContainer.innerHTML = `
     <h3>Estatísticas</h3>
     <p><strong>Total de Atividades:</strong> ${totalActivities}</p>
-    <p><strong>Total de Horas Realizadas:</strong> ${totalHours.toFixed(2)} horas</p>
-    <p><strong>Média de Duração das Atividades:</strong> ${averageDuration.toFixed(2)} horas</p>
-    <p><strong>Atividade com Maior Duração:</strong> ${maxDurationActivity.name} - ${maxDurationActivity.date} | Início: ${maxDurationActivity.start} | Fim: ${maxDurationActivity.end}</p>
-    <p><strong>Atividade com Menor Duração:</strong> ${minDurationActivity.name} - ${minDurationActivity.date} | Início: ${minDurationActivity.start} | Fim: ${minDurationActivity.end}</p>
+    <p><strong>Total de Horas Realizadas:</strong> ${formatDuration(totalHours)}</p>
+    <p><strong>Média de Duração das Atividades:</strong> ${formatDuration(averageDuration)}</p>
+    <p><strong>Atividade com Maior Duração:</strong> ${maxDurationActivity.name} - ${maxDurationActivity.date} | Início: ${maxDurationActivity.start} | Fim: ${maxDurationActivity.end} | Duração: ${formatDuration((new Date(`${maxDurationActivity.date}T${maxDurationActivity.end}`) - new Date(`${maxDurationActivity.date}T${maxDurationActivity.start}`)) / 1000 / 60 / 60)}</p>
+    <p><strong>Atividade com Menor Duração:</strong> ${minDurationActivity.name} - ${minDurationActivity.date} | Início: ${minDurationActivity.start} | Fim: ${minDurationActivity.end} | Duração: ${formatDuration((new Date(`${minDurationActivity.date}T${minDurationActivity.end}`) - new Date(`${minDurationActivity.date}T${minDurationActivity.start}`)) / 1000 / 60 / 60)}</p>
     <h4>Estatísticas por Atividade:</h4>
     <ul>
       ${Object.entries(activityStats).map(([activityName, totalTime]) => `
-        <li><strong>${activityName}:</strong> ${totalTime.toFixed(2)} horas</li>
+        <li><strong>${activityName}:</strong> ${formatDuration(totalTime)}</li>
       `).join('')}
     </ul>
   `;
