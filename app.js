@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', loadActivities);
 document.getElementById('saveActivity').addEventListener('click', saveActivity);
+document.getElementById('filterActivity').addEventListener('input', filterActivities);
 
 function saveActivity() {
   const activityName = document.getElementById('activitySelect').value;
@@ -13,7 +14,7 @@ function saveActivity() {
   }
 
   const newActivity = {
-    id: Date.now(), // Cria um ID único
+    id: Date.now(),
     name: activityName,
     date: activityDate,
     start: startTime,
@@ -29,6 +30,7 @@ function saveActivity() {
 
 function loadActivities() {
   const activities = JSON.parse(localStorage.getItem('activities')) || [];
+  activities.sort((a, b) => new Date(b.date) - new Date(a.date)); // Ordena por data (do mais recente)
   activities.forEach(addActivityToDOM);
 }
 
@@ -36,13 +38,15 @@ function addActivityToDOM(activity) {
   const activityLog = document.getElementById('activityLog');
 
   const listItem = document.createElement('li');
-  listItem.textContent = `${activity.name} - ${activity.date} | Início: ${activity.start} | Fim: ${activity.end}`;
+  listItem.classList.add('activity-item');
+  listItem.innerHTML = `
+    <strong>${activity.name}</strong> - ${activity.date} | Início: ${activity.start} | Fim: ${activity.end}
+    <button class="delete-button">Excluir</button>
+  `;
 
-  const deleteButton = document.createElement('button');
-  deleteButton.textContent = 'Excluir';
+  const deleteButton = listItem.querySelector('.delete-button');
   deleteButton.addEventListener('click', () => deleteActivity(activity.id, listItem));
 
-  listItem.appendChild(deleteButton);
   activityLog.appendChild(listItem);
 }
 
@@ -51,5 +55,19 @@ function deleteActivity(id, listItem) {
   activities = activities.filter(activity => activity.id !== id);
   localStorage.setItem('activities', JSON.stringify(activities));
 
-  listItem.remove(); // Remove do HTML
+  listItem.remove();
+}
+
+function filterActivities() {
+  const filterText = document.getElementById('filterActivity').value.toLowerCase();
+  const activityItems = document.querySelectorAll('.activity-item');
+
+  activityItems.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    if (text.includes(filterText)) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
 }

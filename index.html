@@ -10,30 +10,34 @@
     <div class="container">
       <h1>Activity Tracker</h1>
 
-      <!-- Escolher a atividade -->
-      <label for="activitySelect">Atividade:</label>
-      <select id="activitySelect">
-        <option value="Treino">Treino</option>
-        <option value="Estudo">Estudo</option>
-        <option value="Trabalho">Trabalho</option>
-        <option value="Lazer">Lazer</option>
-      </select>
+      <!-- Filtro de busca -->
+      <input type="text" id="filterActivity" placeholder="Filtrar atividades" />
 
-      <!-- Escolher a data -->
-      <label for="activityDate">Data:</label>
-      <input type="date" id="activityDate" />
+      <div>
+        <h3>Atividades Registradas</h3>
+        <ul id="activityLog"></ul>
+      </div>
 
-      <!-- Escolher horário de início e fim -->
-      <label for="startTime">Início:</label>
-      <input type="time" id="startTime" />
+      <div>
+        <label for="activitySelect">Nome da Atividade</label>
+        <select id="activitySelect">
+          <option value="Leitura">Leitura</option>
+          <option value="Exercício">Exercício</option>
+          <option value="Trabalho">Trabalho</option>
+          <option value="Lazer">Lazer</option>
+        </select>
 
-      <label for="endTime">Fim:</label>
-      <input type="time" id="endTime" />
+        <label for="activityDate">Data</label>
+        <input type="date" id="activityDate" />
 
-      <button id="saveActivity">Registrar Atividade</button>
+        <label for="startTime">Hora Início</label>
+        <input type="time" id="startTime" />
 
-      <h2>Atividades Registradas</h2>
-      <ul id="activityLog"></ul>
+        <label for="endTime">Hora Fim</label>
+        <input type="time" id="endTime" />
+
+        <button id="saveActivity">Salvar Atividade</button>
+      </div>
     </div>
 
     <script src="app.js"></script>
